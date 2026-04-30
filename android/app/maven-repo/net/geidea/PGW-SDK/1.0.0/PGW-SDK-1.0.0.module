@@ -1,0 +1,204 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "net.geidea",
+    "module": "PGW-SDK",
+    "version": "1.0.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.14.3"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.databinding",
+          "module": "viewbinding",
+          "version": {
+            "requires": "8.10.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.2.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "PGW-SDK-1.0.0.aar",
+          "url": "PGW-SDK-1.0.0.aar",
+          "size": 3590214,
+          "sha512": "10cdb2f273b1797b479b91255ec0202eab74e5fd59e54ee4fa63442246090fb7053d6ef0f9122e1fc8bd9df49bf358349e57569880dc90fa612e92b7d21b7653",
+          "sha256": "c05a229bc0deb1736985e31ff776f413e54565146b6db434132dea16a889a243",
+          "sha1": "f10fcaa6ce937da095390d58f0ac420bed542637",
+          "md5": "4141b06933224a5a819233db66625ce9"
+        }
+      ]
+    },
+    {
+      "name": "releaseRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-parcelize-runtime",
+          "version": {
+            "requires": "2.2.10"
+          }
+        },
+        {
+          "group": "androidx.activity",
+          "module": "activity-compose",
+          "version": {
+            "requires": "1.10.1"
+          }
+        },
+        {
+          "group": "androidx.compose",
+          "module": "compose-bom",
+          "version": {
+            "requires": "2025.08.00"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          }
+        },
+        {
+          "group": "androidx.compose.material3",
+          "module": "material3"
+        },
+        {
+          "group": "androidx.camera",
+          "module": "camera-camera2",
+          "version": {
+            "requires": "1.4.2"
+          }
+        },
+        {
+          "group": "androidx.camera",
+          "module": "camera-lifecycle",
+          "version": {
+            "requires": "1.4.2"
+          }
+        },
+        {
+          "group": "androidx.camera",
+          "module": "camera-view",
+          "version": {
+            "requires": "1.4.2"
+          }
+        },
+        {
+          "group": "com.google.mlkit",
+          "module": "text-recognition",
+          "version": {
+            "requires": "16.0.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-collections-immutable",
+          "version": {
+            "requires": "0.4.0"
+          }
+        },
+        {
+          "group": "androidx.navigation",
+          "module": "navigation-runtime-ktx",
+          "version": {
+            "requires": "2.9.3"
+          }
+        },
+        {
+          "group": "androidx.navigation",
+          "module": "navigation-compose",
+          "version": {
+            "requires": "2.9.3"
+          }
+        },
+        {
+          "group": "com.google.android.material",
+          "module": "material",
+          "version": {
+            "requires": "1.12.0"
+          }
+        },
+        {
+          "group": "com.google.ai.edge.litert",
+          "module": "litert",
+          "version": {
+            "requires": "1.4.1"
+          }
+        },
+        {
+          "group": "androidx.databinding",
+          "module": "viewbinding",
+          "version": {
+            "requires": "8.10.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.2.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "PGW-SDK-1.0.0.aar",
+          "url": "PGW-SDK-1.0.0.aar",
+          "size": 3590214,
+          "sha512": "10cdb2f273b1797b479b91255ec0202eab74e5fd59e54ee4fa63442246090fb7053d6ef0f9122e1fc8bd9df49bf358349e57569880dc90fa612e92b7d21b7653",
+          "sha256": "c05a229bc0deb1736985e31ff776f413e54565146b6db434132dea16a889a243",
+          "sha1": "f10fcaa6ce937da095390d58f0ac420bed542637",
+          "md5": "4141b06933224a5a819233db66625ce9"
+        }
+      ]
+    },
+    {
+      "name": "releaseSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "files": [
+        {
+          "name": "PGW-SDK-1.0.0-sources.jar",
+          "url": "PGW-SDK-1.0.0-sources.jar",
+          "size": 595611,
+          "sha512": "8da6c4f75867c5899ce136268f9d3c6eed4b4644f38f7679b481eaacffe224210efa11d284a4a2ddbe07668df1152c4ebe106d74b48260a01232e0b4fe0edd26",
+          "sha256": "09547f99f1b9574d2294ab37d799387690d3da503f4c916da66d4531801dc8e2",
+          "sha1": "0b152d602c0831c84f4ff0abb3608c42963472aa",
+          "md5": "56a51fe4a787796e2d99174615e5b372"
+        }
+      ]
+    }
+  ]
+}
