@@ -1,0 +1,30 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    namespace "com.geideaintegration"
+    compileSdkVersion 35
+    defaultConfig { minSdkVersion 24 }
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java']
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+        }
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+    flatDir { dirs "libs" }
+}
+
+dependencies {
+    compileOnly 'com.facebook.react:react-native:+'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.9.24"
+    implementation(name: 'PGW-SDK-1.0.0', ext: 'aar')
+    implementation "androidx.appcompat:appcompat:1.6.1"
+    implementation "com.google.android.material:material:1.9.0"
+    implementation "androidx.core:core-ktx:1.10.1"
+    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
+}

@@ -1,0 +1,676 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.1.2 effective-5.10 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)
+// swift-module-flags: -target arm64-apple-ios11.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name CardScan
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -interface-compiler-version 6.1.2
+import AVFoundation
+import AVKit
+import Accelerate
+@_exported import CardScan
+import CoreGraphics
+import CoreML
+import CoreTelephony
+import DeveloperToolsSupport
+import Foundation
+import Swift
+import SwiftUI
+import UIKit
+import VideoToolbox
+import Vision
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+import os.log
+import os
+@available(iOS 11.2, *)
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+public protocol ScanEvents {
+  mutating func onNumberRecognized(number: Swift.String, expiry: CardScan.Expiry?, numberBoundingBox: CoreFoundation.CGRect, expiryBoundingBox: CoreFoundation.CGRect?, croppedCardSize: CoreFoundation.CGSize, squareCardImage: CoreGraphics.CGImage, fullCardImage: CoreGraphics.CGImage, centeredCardState: CardScan.CenteredCardState?, uxFrameConfidenceValues: CardScan.UxFrameConfidenceValues?, flashForcedOn: Swift.Bool, numberBoxesInFullImageFrame: [CoreFoundation.CGRect])
+  mutating func onScanComplete(scanStats: CardScan.ScanStats)
+  mutating func onFrameDetected(croppedCardSize: CoreFoundation.CGSize, squareCardImage: CoreGraphics.CGImage, fullCardImage: CoreGraphics.CGImage, centeredCardState: CardScan.CenteredCardState?, uxFrameConfidenceValues: CardScan.UxFrameConfidenceValues?, flashForcedOn: Swift.Bool)
+}
+@available(iOS 11.2, *)
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+@objc public protocol SimpleScanDelegate {
+  @objc func userDidCancelSimple(_ scanViewController: CardScan.SimpleScanViewController)
+  @objc func userDidScanCardSimple(_ scanViewController: CardScan.SimpleScanViewController, creditCard: CardScan.GDCreditCard)
+}
+@_inheritsConvenienceInitializers @available(iOS 11.2, *)
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+@objc @_Concurrency.MainActor @preconcurrency open class SimpleScanViewController : CardScan.ScanBaseViewController {
+  @_Concurrency.MainActor @preconcurrency public var previewView: CardScan.PreviewView
+  @_Concurrency.MainActor @preconcurrency public var blurView: CardScan.BlurView
+  @_Concurrency.MainActor @preconcurrency public var roiView: UIKit.UIView
+  @_Concurrency.MainActor @preconcurrency public var cornerView: CardScan.CornerView?
+  @_Concurrency.MainActor @preconcurrency public var descriptionText: UIKit.UILabel
+  @objc @_Concurrency.MainActor @preconcurrency public var closeButton: UIKit.UIButton
+  @objc @_Concurrency.MainActor @preconcurrency public var torchButton: UIKit.UIButton
+  @_Concurrency.MainActor @preconcurrency public var enableCameraPermissionsButton: UIKit.UIButton
+  @_Concurrency.MainActor @preconcurrency public var enableCameraPermissionsText: UIKit.UILabel
+  @_Concurrency.MainActor @preconcurrency public var numberText: UIKit.UILabel
+  @_Concurrency.MainActor @preconcurrency public var expiryText: UIKit.UILabel
+  @_Concurrency.MainActor @preconcurrency public var nameText: UIKit.UILabel
+  @_Concurrency.MainActor @preconcurrency public var expiryLayoutView: UIKit.UIView
+  @objc @_Concurrency.MainActor @preconcurrency public static var descriptionString: Swift.String
+  @objc @_Concurrency.MainActor @preconcurrency public static var enableCameraPermissionString: Swift.String
+  @objc @_Concurrency.MainActor @preconcurrency public static var enableCameraPermissionsDescriptionString: Swift.String
+  @objc @_Concurrency.MainActor @preconcurrency public static var closeButtonString: Swift.String
+  @objc @_Concurrency.MainActor @preconcurrency public static var torchButtonString: Swift.String
+  @objc @_Concurrency.MainActor @preconcurrency weak public var delegate: (any CardScan.SimpleScanDelegate)?
+  @objc @_Concurrency.MainActor @preconcurrency public var scanPerformancePriority: CardScan.ScanPerformance
+  @objc @_Concurrency.MainActor @preconcurrency public var maxErrorCorrectionDuration: Swift.Double
+  @objc @_Concurrency.MainActor @preconcurrency public static func createViewController() -> CardScan.SimpleScanViewController
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic open func viewDidLoad()
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic open func viewDidDisappear(_ animated: Swift.Bool)
+  @_Concurrency.MainActor @preconcurrency open func setupUiComponents()
+  @_Concurrency.MainActor @preconcurrency open func setupPreviewViewUi()
+  @_Concurrency.MainActor @preconcurrency open func setupBlurViewUi()
+  @_Concurrency.MainActor @preconcurrency open func setupRoiViewUi()
+  @_Concurrency.MainActor @preconcurrency open func setupCloseButtonUi()
+  @_Concurrency.MainActor @preconcurrency open func setupTorchButtonUi()
+  @_Concurrency.MainActor @preconcurrency open func setupDescriptionTextUi()
+  @_Concurrency.MainActor @preconcurrency open func setupCardDetailsUi()
+  @_Concurrency.MainActor @preconcurrency open func setupDenyUi()
+  @_Concurrency.MainActor @preconcurrency open func setupDebugViewUi()
+  @_Concurrency.MainActor @preconcurrency open func setupConstraints()
+  @_Concurrency.MainActor @preconcurrency open func setupPreviewViewConstraints()
+  @_Concurrency.MainActor @preconcurrency open func setupBlurViewConstraints()
+  @_Concurrency.MainActor @preconcurrency open func setupRoiViewConstraints()
+  @_Concurrency.MainActor @preconcurrency open func setupCloseButtonConstraints()
+  @_Concurrency.MainActor @preconcurrency open func setupTorchButtonConstraints()
+  @_Concurrency.MainActor @preconcurrency open func setupDescriptionTextConstraints()
+  @_Concurrency.MainActor @preconcurrency open func setupCardDetailsConstraints()
+  @_Concurrency.MainActor @preconcurrency open func setupDenyConstraints()
+  @_Concurrency.MainActor @preconcurrency open func setupDebugViewConstraints()
+  @_Concurrency.MainActor @preconcurrency @objc override open func onScannedCard(number: Swift.String, expiryYear: Swift.String?, expiryMonth: Swift.String?, scannedImage: UIKit.UIImage?)
+  @_Concurrency.MainActor @preconcurrency open func showScannedCardDetails(prediction: CardScan.CreditCardOcrPrediction)
+  @_Concurrency.MainActor @preconcurrency override open func prediction(prediction: CardScan.CreditCardOcrPrediction, squareCardImage: CoreGraphics.CGImage, fullCardImage: CoreGraphics.CGImage, state: CardScan.MainLoopState)
+  @_Concurrency.MainActor @preconcurrency @objc override open func onCameraPermissionDenied(showedPrompt: Swift.Bool)
+  @objc @_Concurrency.MainActor @preconcurrency open func cancelButtonPress()
+  @objc @_Concurrency.MainActor @preconcurrency open func torchButtonPress()
+  @objc @_Concurrency.MainActor @preconcurrency open func enableCameraPermissionsPress()
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+extension UIKit.UIView {
+  @_Concurrency.MainActor @preconcurrency public func setAnchorsEqual(to otherView: UIKit.UIView)
+}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+public struct Api {
+  public struct ApiError : Swift.Error {
+  }
+  public static var lastScanStatsSuccess: Foundation.Date?
+  public typealias ApiCompletion = (_ response: [Swift.String : Any]?, _ error: CardScan.Api.ApiError?) -> Swift.Void
+  public static var baseUrl: Swift.String?
+  public static var apiKey: Swift.String?
+  public static func apiCallWithDeviceInfo(endpoint: Swift.String, parameters: [Swift.String : Any], completion: @escaping CardScan.Api.ApiCompletion)
+  @available(iOS 11.0, *)
+  public static func downloadAndCompileLatestModel(signedUrl: Swift.String, completion: @escaping (_ response: Foundation.URL?, _ error: CardScan.Api.ApiError?) -> Swift.Void)
+  public static func getLatestModelConfig(modelClass: Swift.String, modelFrameworkVersion: Swift.String, parameters: [Swift.String : Any], completion: @escaping (_ response: CardScan.ModelConfigResponse?, _ error: CardScan.Api.ApiError?) -> Swift.Void)
+}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+public struct DetectedAllBoxes {
+  public init()
+  public func toArray() -> [[Swift.String : Any]]
+}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+@objc public enum CardNetwork : Swift.Int {
+  case VISA
+  case MASTERCARD
+  case AMEX
+  case DISCOVER
+  case UNIONPAY
+  case JCB
+  case DINERSCLUB
+  case REGIONAL
+  case UNKNOWN
+  public func toString() -> Swift.String
+  public init?(rawValue: Swift.Int)
+  @available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+extension UIKit.UIImage {
+  public func pixelBuffer(width: Swift.Int, height: Swift.Int) -> CoreVideo.CVPixelBuffer?
+  public func pixelBufferGray(width: Swift.Int, height: Swift.Int) -> CoreVideo.CVPixelBuffer?
+  public func pixelBufferGray() -> CoreVideo.CVPixelBuffer?
+  public func areCornerPixelsBlack() -> Swift.Bool
+}
+extension UIKit.UIImage {
+  convenience public init?(pixelBuffer: CoreVideo.CVPixelBuffer)
+  convenience public init?(pixelBuffer: CoreVideo.CVPixelBuffer, context: CoreImage.CIContext)
+}
+extension UIKit.UIImage {
+  @nonobjc public class func fromByteArrayRGBA(_ bytes: [Swift.UInt8], width: Swift.Int, height: Swift.Int, scale: CoreFoundation.CGFloat = 0, orientation: UIKit.UIImage.Orientation = .up) -> UIKit.UIImage?
+  @nonobjc public class func fromByteArrayGray(_ bytes: [Swift.UInt8], width: Swift.Int, height: Swift.Int, scale: CoreFoundation.CGFloat = 0, orientation: UIKit.UIImage.Orientation = .up) -> UIKit.UIImage?
+}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+extension UIKit.UIImage {
+  public static func blankGrayImage(width: Swift.Int, height: Swift.Int) -> UIKit.UIImage?
+}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+public struct ScanStats {
+  public var scans: Swift.Int
+  public var flatDigitsRecognized: Swift.Int
+  public var flatDigitsDetected: Swift.Int
+  public var embossedDigitsRecognized: Swift.Int
+  public var embossedDigitsDetected: Swift.Int
+  public var torchOn: Swift.Bool
+  public var orientation: Swift.String
+  public var success: Swift.Bool?
+  public var endTime: Foundation.Date?
+  public var model: Swift.String?
+  public var algorithm: Swift.String?
+  public var bin: Swift.String?
+  public var lastFlatBoxes: [CoreFoundation.CGRect]?
+  public var lastEmbossedBoxes: [CoreFoundation.CGRect]?
+  public var deviceType: Swift.String?
+  public var numberRect: CoreFoundation.CGRect?
+  public var expiryBoxes: [CoreFoundation.CGRect]?
+  public var cardsDetected: Swift.Int
+  public var permissionGranted: Swift.Bool?
+  public var userCanceled: Swift.Bool
+  public static var lastScanStatsSuccess: Foundation.Date?
+  public func toDictionaryForAnalytics() -> [Swift.String : Any]
+  public func duration() -> Swift.Double
+}
+@_inheritsConvenienceInitializers @available(iOS 13.0, *)
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+public class AppleCreditCardOcr : CardScan.CreditCardOcrImplementation {
+  override public func recognizeCard(in fullImage: CoreGraphics.CGImage, roiRectangle: CoreFoundation.CGRect) -> CardScan.CreditCardOcrPrediction
+  override public init(dispatchQueueLabel: Swift.String)
+  @objc deinit
+}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+open class CreditCardOcrImplementation {
+  public var frames: Swift.Int
+  public var computationTime: Swift.Double
+  public init(dispatchQueueLabel: Swift.String)
+  open func recognizeCard(in fullImage: CoreGraphics.CGImage, roiRectangle: CoreFoundation.CGRect) -> CardScan.CreditCardOcrPrediction
+  @objc deinit
+}
+@available(iOS 11.2, *)
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+public struct SsdDetect {
+  public static func warmUp()
+  public init()
+  public static func initializeModels(contentsOf url: Foundation.URL)
+  public static func isModelLoaded() -> Swift.Bool
+  public func predict(image: UIKit.UIImage) -> CardScan.DetectedAllBoxes?
+}
+@_hasMissingDesignatedInitializers @available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+public class MachineLearningResult {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @available(iOS 11.2, *)
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+public class SSDCreditCardOcr : CardScan.CreditCardOcrImplementation {
+  override public init(dispatchQueueLabel: Swift.String)
+  override public func recognizeCard(in fullImage: CoreGraphics.CGImage, roiRectangle: CoreFoundation.CGRect) -> CardScan.CreditCardOcrPrediction
+  @objc deinit
+}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+public struct DetectedAllOcrBoxes {
+  public init()
+  public func toArray() -> [[Swift.String : Any]]
+  public func getBoundingBoxesOfDigits() -> [CoreFoundation.CGRect]
+}
+@available(iOS 11.2, *)
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+@objc public protocol ScanDelegate {
+  @objc func userDidCancel(_ scanViewController: CardScan.ScanViewController)
+  @objc func userDidScanCard(_ scanViewController: CardScan.ScanViewController, creditCard: CardScan.GDCreditCard)
+  @objc optional func userDidScanQrCode(_ scanViewController: CardScan.ScanViewController, payload: Swift.String)
+  @objc func userDidSkip(_ scanViewController: CardScan.ScanViewController)
+}
+@available(iOS 11.2, *)
+@objc public protocol ScanStringsDataSource {
+  @objc func scanCard() -> Swift.String
+  @objc func positionCard() -> Swift.String
+  @objc func backButton() -> Swift.String
+  @objc func skipButton() -> Swift.String
+}
+@available(iOS 11.2, *)
+@objc public protocol CaptureOutputDelegate {
+  @objc func capture(_ output: AVFoundation.AVCaptureOutput, didOutput sampleBuffer: CoreMedia.CMSampleBuffer, from connection: AVFoundation.AVCaptureConnection)
+}
+@available(iOS 11.2, *)
+@objc public protocol FullScanStringsDataSource : CardScan.ScanStringsDataSource {
+  @objc func denyPermissionTitle() -> Swift.String
+  @objc func denyPermissionMessage() -> Swift.String
+  @objc func denyPermissionButton() -> Swift.String
+}
+@objc public class GDCreditCard : ObjectiveC.NSObject {
+  @objc public var number: Swift.String
+  @objc public var expiryMonth: Swift.String?
+  @objc public var expiryYear: Swift.String?
+  @objc public var name: Swift.String?
+  @objc public var image: UIKit.UIImage?
+  @objc public var cvv: Swift.String?
+  @objc public var postalCode: Swift.String?
+  public init(number: Swift.String)
+  @objc public func expiryForDisplay() -> Swift.String?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @available(iOS 11.2, *)
+@objc @_Concurrency.MainActor @preconcurrency public class ScanViewController : CardScan.ScanBaseViewController {
+  @_Concurrency.MainActor @preconcurrency weak public var scanDelegate: (any CardScan.ScanDelegate)?
+  @_Concurrency.MainActor @preconcurrency weak public var captureOutputDelegate: (any CardScan.CaptureOutputDelegate)?
+  @objc @_Concurrency.MainActor @preconcurrency weak public var stringDataSource: (any CardScan.ScanStringsDataSource)?
+  @objc @_Concurrency.MainActor @preconcurrency public var allowSkip: Swift.Bool
+  @_Concurrency.MainActor @preconcurrency public var torchLevel: Swift.Float?
+  @_Concurrency.MainActor @preconcurrency public var scanQrCode: Swift.Bool
+  @_Concurrency.MainActor @preconcurrency public var navigationBarIsHidden: Swift.Bool
+  @objc @_Concurrency.MainActor @preconcurrency public var hideBackButtonImage: Swift.Bool
+  @objc @_Concurrency.MainActor @preconcurrency public var backButtonImage: UIKit.UIImage?
+  @objc @_Concurrency.MainActor @preconcurrency public var backButtonColor: UIKit.UIColor?
+  @objc @_Concurrency.MainActor @preconcurrency public var backButtonFont: UIKit.UIFont?
+  @objc @_Concurrency.MainActor @preconcurrency public var scanCardFont: UIKit.UIFont?
+  @objc @_Concurrency.MainActor @preconcurrency public var positionCardFont: UIKit.UIFont?
+  @objc @_Concurrency.MainActor @preconcurrency public var skipButtonFont: UIKit.UIFont?
+  @objc @_Concurrency.MainActor @preconcurrency public var backButtonImageToTextDelta: Foundation.NSNumber?
+  @objc @_Concurrency.MainActor @preconcurrency public var torchButtonImage: UIKit.UIImage?
+  @objc @_Concurrency.MainActor @preconcurrency public var cornerColor: UIKit.UIColor?
+  @objc @IBOutlet @_Concurrency.MainActor @preconcurrency weak public var regionOfInterestLabel: UIKit.UILabel!
+  @_Concurrency.MainActor @preconcurrency public var torchButtonSize: CoreFoundation.CGSize?
+  @objc @_Concurrency.MainActor @preconcurrency public static func createViewController(withDelegate delegate: (any CardScan.ScanDelegate)? = nil) -> CardScan.ScanViewController?
+  @objc @_Concurrency.MainActor @preconcurrency public static func createViewController(withDelegate delegate: (any CardScan.ScanDelegate)? = nil, configuration: CardScan.ScanConfiguration) -> CardScan.ScanViewController?
+  @objc @_Concurrency.MainActor @preconcurrency public func cancel(callDelegate: Swift.Bool)
+  @_Concurrency.MainActor @preconcurrency public func setStrings()
+  @_Concurrency.MainActor @preconcurrency @objc override public func onCameraPermissionDenied(showedPrompt: Swift.Bool)
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidLoad()
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewWillAppear(_ animated: Swift.Bool)
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidLayoutSubviews()
+  @_Concurrency.MainActor @preconcurrency @objc override public func showCardNumber(_ number: Swift.String, expiry: Swift.String?)
+  @_Concurrency.MainActor @preconcurrency @objc override public func useCurrentFrameNumber(errorCorrectedNumber: Swift.String?, currentFrameNumber: Swift.String) -> Swift.Bool
+  @_Concurrency.MainActor @preconcurrency @objc override public func captureOutput(_ output: AVFoundation.AVCaptureOutput, didOutput sampleBuffer: CoreMedia.CMSampleBuffer, from connection: AVFoundation.AVCaptureConnection)
+  @_Concurrency.MainActor @preconcurrency @objc override public func onScannedCard(number: Swift.String, expiryYear: Swift.String?, expiryMonth: Swift.String?, scannedImage: UIKit.UIImage?)
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+public struct CreditCardUtils {
+  public static var prefixesRegional: [Swift.String]
+  public static func addMirSupport()
+  public static func isValidNumber(cardNumber: Swift.String) -> Swift.Bool
+  public static func isValidCvv(cvv: Swift.String, network: CardScan.CardNetwork) -> Swift.Bool
+  public static func isValidDate(expMonth: Swift.String, expYear: Swift.String) -> Swift.Bool
+  public static func determineCardNetwork(cardNumber: Swift.String) -> CardScan.CardNetwork
+  public static func determineCardType(cardNumber: Swift.String) -> CardScan.CardType
+  public static func format(number: Swift.String) -> Swift.String
+  public static func formatCardNumber(cardNumber: Swift.String) -> Swift.String
+  public static func formatExpirationDate(expMonth: Swift.String, expYear: Swift.String) -> Swift.String
+}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+extension CardScan.CreditCardUtils {
+  public static func isVisa(number: Swift.String) -> Swift.Bool
+  public static func isAmex(number: Swift.String) -> Swift.Bool
+  public static func isDiscover(number: Swift.String) -> Swift.Bool
+  public static func isMastercard(number: Swift.String) -> Swift.Bool
+  public static func isUnionPay(number: Swift.String) -> Swift.Bool
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+@_Concurrency.MainActor @preconcurrency public class PreviewView : UIKit.UIView {
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public class var layerClass: Swift.AnyClass {
+    @objc get
+  }
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func layoutSubviews()
+  @objc deinit
+}
+@available(iOS 11.2, *)
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+public protocol TestingImageDataSource : AnyObject {
+  func nextSquareAndFullImage() -> (CoreGraphics.CGImage, CoreGraphics.CGImage)?
+}
+@_inheritsConvenienceInitializers @available(iOS 11.2, *)
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+@objc @_Concurrency.MainActor @preconcurrency open class ScanBaseViewController : UIKit.UIViewController, AVFoundation.AVCaptureVideoDataOutputSampleBufferDelegate, CardScan.OcrMainLoopDelegate {
+  @_Concurrency.MainActor @preconcurrency weak public var testingImageDataSource: (any CardScan.TestingImageDataSource)?
+  @objc @_Concurrency.MainActor @preconcurrency public var includeCardImage: Swift.Bool
+  @objc @_Concurrency.MainActor @preconcurrency public var showDebugImageView: Swift.Bool
+  @objc @_Concurrency.MainActor @preconcurrency public var sendScanStats: Swift.Bool
+  @_Concurrency.MainActor @preconcurrency public var scanEventsDelegate: (any CardScan.ScanEvents)?
+  @_Concurrency.MainActor @preconcurrency public static let machineLearningQueue: Dispatch.DispatchQueue
+  @_Concurrency.MainActor @preconcurrency public var hideNavigationBar: Swift.Bool?
+  @_Concurrency.MainActor @preconcurrency public var regionOfInterestCornerRadius: CoreFoundation.CGFloat
+  @_Concurrency.MainActor @preconcurrency public var mainLoop: (any CardScan.MachineLearningLoop)?
+  @_Concurrency.MainActor @preconcurrency public var predictedName: Swift.String?
+  @objc @_Concurrency.MainActor @preconcurrency open func onScannedCard(number: Swift.String, expiryYear: Swift.String?, expiryMonth: Swift.String?, scannedImage: UIKit.UIImage?)
+  @objc @_Concurrency.MainActor @preconcurrency open func showCardNumber(_ number: Swift.String, expiry: Swift.String?)
+  @objc @_Concurrency.MainActor @preconcurrency open func showWrongCard(number: Swift.String?, expiry: Swift.String?, name: Swift.String?)
+  @objc @_Concurrency.MainActor @preconcurrency open func showNoCard()
+  @objc @_Concurrency.MainActor @preconcurrency open func onCameraPermissionDenied(showedPrompt: Swift.Bool)
+  @objc @_Concurrency.MainActor @preconcurrency open func useCurrentFrameNumber(errorCorrectedNumber: Swift.String?, currentFrameNumber: Swift.String) -> Swift.Bool
+  @_Concurrency.MainActor @preconcurrency public func toggleTorch()
+  @_Concurrency.MainActor @preconcurrency public func isTorchOn() -> Swift.Bool
+  @_Concurrency.MainActor @preconcurrency public func hasTorchAndIsAvailable() -> Swift.Bool
+  @_Concurrency.MainActor @preconcurrency public func setTorchLevel(level: Swift.Float)
+  @objc @_Concurrency.MainActor @preconcurrency public static func configure(apiKey: Swift.String? = nil)
+  @objc @_Concurrency.MainActor @preconcurrency public static func supportedOrientationMaskOrDefault() -> UIKit.UIInterfaceOrientationMask
+  @objc @_Concurrency.MainActor @preconcurrency public static func isCompatible() -> Swift.Bool
+  @objc @_Concurrency.MainActor @preconcurrency public static func isCompatible(configuration: CardScan.ScanConfiguration) -> Swift.Bool
+  @objc @_Concurrency.MainActor @preconcurrency public static func cameraImage() -> UIKit.UIImage?
+  @_Concurrency.MainActor @preconcurrency public func cancelScan()
+  @_Concurrency.MainActor @preconcurrency public func setUpCorners()
+  @_Concurrency.MainActor @preconcurrency public func startCameraPreview()
+  @_Concurrency.MainActor @preconcurrency public func setupOnViewDidLoad(regionOfInterestLabel: UIKit.UIView, blurView: CardScan.BlurView, previewView: CardScan.PreviewView, cornerView: CardScan.CornerView?, debugImageView: UIKit.UIImageView?, torchLevel: Swift.Float?)
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic open var shouldAutorotate: Swift.Bool {
+    @objc get
+  }
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic open var supportedInterfaceOrientations: UIKit.UIInterfaceOrientationMask {
+    @objc get
+  }
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic open var preferredInterfaceOrientationForPresentation: UIKit.UIInterfaceOrientation {
+    @objc get
+  }
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic open var preferredStatusBarStyle: UIKit.UIStatusBarStyle {
+    @objc get
+  }
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic open func viewWillTransition(to size: CoreFoundation.CGSize, with coordinator: any UIKit.UIViewControllerTransitionCoordinator)
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic open func viewWillAppear(_ animated: Swift.Bool)
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic open func viewDidLayoutSubviews()
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic open func viewDidAppear(_ animated: Swift.Bool)
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic open func viewWillDisappear(_ animated: Swift.Bool)
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic open func viewDidDisappear(_ animated: Swift.Bool)
+  @_Concurrency.MainActor @preconcurrency public func getScanStats() -> CardScan.ScanStats
+  @_Concurrency.MainActor @preconcurrency @objc open func captureOutput(_ output: AVFoundation.AVCaptureOutput, didOutput sampleBuffer: CoreMedia.CMSampleBuffer, from connection: AVFoundation.AVCaptureConnection)
+  @_Concurrency.MainActor @preconcurrency public func updateDebugImageView(image: UIKit.UIImage)
+  @_Concurrency.MainActor @preconcurrency public func complete(creditCardOcrResult: CardScan.CreditCardOcrResult)
+  @_Concurrency.MainActor @preconcurrency open func prediction(prediction: CardScan.CreditCardOcrPrediction, squareCardImage: CoreGraphics.CGImage, fullCardImage: CoreGraphics.CGImage, state: CardScan.MainLoopState)
+  @_Concurrency.MainActor @preconcurrency public func showCardDetails(number: Swift.String?, expiry: Swift.String?, name: Swift.String?)
+  @_Concurrency.MainActor @preconcurrency public func showCardDetailsWithFlash(number: Swift.String?, expiry: Swift.String?, name: Swift.String?)
+  @_Concurrency.MainActor @preconcurrency public func shouldUsePrediction(errorCorrectedNumber: Swift.String?, prediction: CardScan.CreditCardOcrPrediction) -> Swift.Bool
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+@objc public enum CardType : Swift.Int {
+  case CREDIT
+  case DEBIT
+  case PREPAID
+  case UNKNOWN
+  public func toString() -> Swift.String
+  public static func fromString(_ str: Swift.String) -> CardScan.CardType
+  public init?(rawValue: Swift.Int)
+  @available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+public enum MainLoopState {
+  case initial
+  case ocrOnly
+  case cardOnly
+  case ocrAndCard
+  case ocrIncorrect
+  case ocrDelayForCard
+  case ocrForceFlash
+  case finished
+  case nameAndExpiry
+  public static func == (a: CardScan.MainLoopState, b: CardScan.MainLoopState) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+public protocol MainLoopStateMachine {
+  func loopState() -> CardScan.MainLoopState
+  func event(prediction: CardScan.CreditCardOcrPrediction) -> CardScan.MainLoopState
+  func reset() -> any CardScan.MainLoopStateMachine
+}
+@_inheritsConvenienceInitializers @available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+@objc open class OcrMainLoopStateMachine : ObjectiveC.NSObject, CardScan.MainLoopStateMachine {
+  public var state: CardScan.MainLoopState
+  public var startTimeForCurrentState: Foundation.Date
+  final public let errorCorrectionDurationSeconds: Swift.Double
+  @objc override dynamic public init()
+  public func loopState() -> CardScan.MainLoopState
+  public func event(prediction: CardScan.CreditCardOcrPrediction) -> CardScan.MainLoopState
+  open func transition(prediction: CardScan.CreditCardOcrPrediction) -> CardScan.MainLoopState?
+  open func reset() -> any CardScan.MainLoopStateMachine
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+@objc public class OcrAccurateMainLoopStateMachine : ObjectiveC.NSObject, CardScan.MainLoopStateMachine {
+  public func loopState() -> CardScan.MainLoopState
+  public init(maxErrorCorrection: Swift.Double)
+  public func event(prediction: CardScan.CreditCardOcrPrediction) -> CardScan.MainLoopState
+  public func transition(prediction: CardScan.CreditCardOcrPrediction) -> CardScan.MainLoopState?
+  public func reset() -> any CardScan.MainLoopStateMachine
+  @objc deinit
+}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+public struct Expiry : Swift.Hashable {
+  public let string: Swift.String
+  public let month: Swift.UInt
+  public let year: Swift.UInt
+  public static func == (lhs: CardScan.Expiry, rhs: CardScan.Expiry) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+public protocol OcrMainLoopDelegate : AnyObject {
+  func complete(creditCardOcrResult: CardScan.CreditCardOcrResult)
+  func prediction(prediction: CardScan.CreditCardOcrPrediction, squareCardImage: CoreGraphics.CGImage, fullCardImage: CoreGraphics.CGImage, state: CardScan.MainLoopState)
+  func showCardDetails(number: Swift.String?, expiry: Swift.String?, name: Swift.String?)
+  func showCardDetailsWithFlash(number: Swift.String?, expiry: Swift.String?, name: Swift.String?)
+  func showWrongCard(number: Swift.String?, expiry: Swift.String?, name: Swift.String?)
+  func showNoCard()
+  func shouldUsePrediction(errorCorrectedNumber: Swift.String?, prediction: CardScan.CreditCardOcrPrediction) -> Swift.Bool
+}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+public protocol MachineLearningLoop : AnyObject {
+  func push(fullImage: CoreGraphics.CGImage, roiRectangle: CoreFoundation.CGRect)
+}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+open class OcrMainLoop : CardScan.MachineLearningLoop {
+  public enum AnalyzerType {
+    case apple
+    case ssd
+    public static func == (a: CardScan.OcrMainLoop.AnalyzerType, b: CardScan.OcrMainLoop.AnalyzerType) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public var scanStats: CardScan.ScanStats
+  weak public var mainLoopDelegate: (any CardScan.OcrMainLoopDelegate)?
+  public var errorCorrection: CardScan.ErrorCorrection
+  public var imageQueueSize: Swift.Int
+  public init(analyzers: [CardScan.OcrMainLoop.AnalyzerType] = [.ssd, .apple])
+  public func setupMl(ocrImplementations: [CardScan.CreditCardOcrImplementation])
+  public func push(fullImage: CoreGraphics.CGImage, roiRectangle: CoreFoundation.CGRect)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+public class CSBundle {
+  public static var bundleIdentifier: Swift.String
+  public static var cardScanBundle: Foundation.Bundle?
+  public static var namedBundle: Swift.String
+  public static var namedBundleExtension: Swift.String
+  public static func bundle() -> Foundation.Bundle?
+  @objc deinit
+}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+open class ErrorCorrection {
+  final public let stateMachine: any CardScan.MainLoopStateMachine
+  public var frames: Swift.Int
+  final public let startTime: Foundation.Date
+  public var mostRecentPrediction: CardScan.CreditCardOcrPrediction?
+  public init(stateMachine: any CardScan.MainLoopStateMachine)
+  open func result() -> CardScan.CreditCardOcrResult?
+  open func add(prediction: CardScan.CreditCardOcrPrediction) -> CardScan.CreditCardOcrResult?
+  open func reset() -> CardScan.ErrorCorrection
+  @objc deinit
+}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+extension CoreGraphics.CGImage {
+  public func croppedImageForSsd(roiRectangle: CoreFoundation.CGRect) -> (CoreGraphics.CGImage, CoreFoundation.CGRect)?
+  public func squareImageForUxModel(roiRectangle: CoreFoundation.CGRect) -> CoreGraphics.CGImage?
+  public func squareCardImage(roiRectangle: CoreFoundation.CGRect) -> CoreGraphics.CGImage?
+}
+@objc @_inheritsConvenienceInitializers @available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+@_Concurrency.MainActor @preconcurrency public class BlurView : UIKit.UIView {
+  @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  @_Concurrency.MainActor @preconcurrency public func maskToRoi(roi: UIKit.UIView)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+public class CreditCardOcrResult : CardScan.MachineLearningResult {
+  final public let mostRecentPrediction: CardScan.CreditCardOcrPrediction
+  final public let number: Swift.String
+  final public let expiry: Swift.String?
+  final public let name: Swift.String?
+  final public let state: CardScan.MainLoopState
+  public var hasCenteredCard: CardScan.CenteredCardState?
+  public var expiryMonth: Swift.String? {
+    get
+  }
+  public var expiryYear: Swift.String? {
+    get
+  }
+  public static func finishedWithNonNumberSideCard(prediction: CardScan.CreditCardOcrPrediction, duration: Swift.Double, frames: Swift.Int) -> CardScan.CreditCardOcrResult
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+@_Concurrency.MainActor @preconcurrency public class CornerView : UIKit.UIView {
+  @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  @_Concurrency.MainActor @preconcurrency public func setFrameSize(roi: UIKit.UIView)
+  @_Concurrency.MainActor @preconcurrency public func drawCorners()
+  @objc deinit
+}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+public class ActiveStateComputation {
+  public init(label: Swift.String)
+  public func async(execute work: @escaping () -> Swift.Void)
+  @objc deinit
+}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+public struct ModelConfigResponse {
+  public let modelVersion: Swift.String
+  public let hash: Swift.String
+  public let hashAlgorithm: Swift.String
+  public let signedUrl: Swift.String
+}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+public struct UxFrameConfidenceValues {
+  public let hasOcr: Swift.Bool
+  public let uxPan: Swift.Double
+  public let uxNoPan: Swift.Double
+  public let uxNoCard: Swift.Double
+  public init(hasOcr: Swift.Bool, uxPan: Swift.Double, uxNoPan: Swift.Double, uxNoCard: Swift.Double)
+  public func toArray() -> [Swift.Double]
+}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+public enum CenteredCardState {
+  case numberSide
+  case nonNumberSide
+  case noCard
+  public func hasCard() -> Swift.Bool
+  public static func == (a: CardScan.CenteredCardState, b: CardScan.CenteredCardState) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+public struct CreditCardOcrPrediction {
+  public let image: CoreGraphics.CGImage
+  public let ocrCroppingRectangle: CoreFoundation.CGRect
+  public let number: Swift.String?
+  public let expiryMonth: Swift.String?
+  public let expiryYear: Swift.String?
+  public let name: Swift.String?
+  public let computationTime: Swift.Double
+  public let numberBoxes: [CoreFoundation.CGRect]?
+  public let expiryBoxes: [CoreFoundation.CGRect]?
+  public let nameBoxes: [CoreFoundation.CGRect]?
+  public var centeredCardState: CardScan.CenteredCardState?
+  public var uxFrameConfidenceValues: CardScan.UxFrameConfidenceValues?
+  public init(image: CoreGraphics.CGImage, ocrCroppingRectangle: CoreFoundation.CGRect, number: Swift.String?, expiryMonth: Swift.String?, expiryYear: Swift.String?, name: Swift.String?, computationTime: Swift.Double, numberBoxes: [CoreFoundation.CGRect]?, expiryBoxes: [CoreFoundation.CGRect]?, nameBoxes: [CoreFoundation.CGRect]?, centeredCardState: CardScan.CenteredCardState? = nil, uxFrameConfidenceValues: CardScan.UxFrameConfidenceValues? = nil)
+  public static func emptyPrediction(cgImage: CoreGraphics.CGImage) -> CardScan.CreditCardOcrPrediction
+  public var expiryForDisplay: Swift.String? {
+    get
+  }
+  public var expiryAsUInt: (Swift.UInt, Swift.UInt)? {
+    get
+  }
+  public var numberBox: CoreFoundation.CGRect? {
+    get
+  }
+  public var expiryBox: CoreFoundation.CGRect? {
+    get
+  }
+  public var numberBoxesInFullImageFrame: [CoreFoundation.CGRect]? {
+    get
+  }
+}
+@available(iOS 11.2, *)
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+public class OcrDD {
+  public var lastDetectedBoxes: [CoreFoundation.CGRect]
+  public init()
+  public func perform(croppedCardImage: CoreGraphics.CGImage) -> Swift.String?
+  @objc deinit
+}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+@objc public enum ScanPerformance : Swift.Int {
+  case fast
+  case accurate
+  public init?(rawValue: Swift.Int)
+  @available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+@objc public class ScanConfiguration : ObjectiveC.NSObject {
+  @objc public var runOnOldDevices: Swift.Bool
+  @objc public var setPreviouslyDeniedDevicesAsIncompatible: Swift.Bool
+  @objc override dynamic public init()
+  @objc deinit
+}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+extension CardScan.CardNetwork : Swift.Equatable {}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+extension CardScan.CardNetwork : Swift.Hashable {}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+extension CardScan.CardNetwork : Swift.RawRepresentable {}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+extension CardScan.CardType : Swift.Equatable {}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+extension CardScan.CardType : Swift.Hashable {}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+extension CardScan.CardType : Swift.RawRepresentable {}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+extension CardScan.MainLoopState : Swift.Equatable {}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+extension CardScan.MainLoopState : Swift.Hashable {}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+extension CardScan.OcrMainLoop.AnalyzerType : Swift.Equatable {}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+extension CardScan.OcrMainLoop.AnalyzerType : Swift.Hashable {}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+extension CardScan.CenteredCardState : Swift.Equatable {}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+extension CardScan.CenteredCardState : Swift.Hashable {}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+extension CardScan.ScanPerformance : Swift.Equatable {}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+extension CardScan.ScanPerformance : Swift.Hashable {}
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
+extension CardScan.ScanPerformance : Swift.RawRepresentable {}
