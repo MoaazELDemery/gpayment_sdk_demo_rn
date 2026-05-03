@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Alert,
   StyleSheet,
@@ -20,6 +20,7 @@ import type {
   Region,
   GeideaResult,
 } from '@geidea/payment-sdk-react-native';
+import { createSession } from './src/api/createSession';
 
 type PickerOption<T extends string> = { label: string; value: T };
 
@@ -29,9 +30,9 @@ const LANGUAGES: PickerOption<Language>[] = [
 ];
 
 const ENVIRONMENTS: PickerOption<Environment>[] = [
-  { label: 'Test', value: 'test' },
-  { label: 'Pre-Production', value: 'preprod' },
   { label: 'Production', value: 'prod' },
+  { label: 'Pre-Prod', value: 'preprod' },
+  { label: 'Test', value: 'test' },
 ];
 
 const REGIONS: PickerOption<Region>[] = [
@@ -76,9 +77,17 @@ function PaymentDemo() {
   const insets = useSafeAreaInsets();
   const [sessionId, setSessionId] = useState('');
   const [language, setLanguage] = useState<Language>('en');
-  const [environment, setEnvironment] = useState<Environment>('test');
+  const [environment, setEnvironment] = useState<Environment>('prod');
   const [region, setRegion] = useState<Region>('egypt');
   const [loading, setLoading] = useState(false);
+  const [sessionLoading, setSessionLoading] = useState(true);
+
+  useEffect(() => {
+    createSession()
+      .then(id => setSessionId(id))
+      .catch(err => Alert.alert('Session Error', err.message))
+      .finally(() => setSessionLoading(false));
+  }, []);
 
   const handlePay = async () => {
     if (!sessionId.trim()) {
@@ -91,7 +100,7 @@ function PaymentDemo() {
       const result: GeideaResult = await payWithGeidea({
         sessionId: sessionId.trim(),
         language,
-        environment,
+        environment: 'prod',
         region,
       });
 
@@ -127,12 +136,13 @@ function PaymentDemo() {
         <Text style={styles.label}>Session ID</Text>
         <TextInput
           style={styles.input}
-          value={sessionId}
+          value={sessionLoading ? 'Generating session...' : sessionId}
           onChangeText={setSessionId}
           placeholder="Enter session ID"
           placeholderTextColor="#999"
           autoCapitalize="none"
           autoCorrect={false}
+          editable={!sessionLoading}
         />
 
         <Text style={styles.label}>Language</Text>
@@ -157,9 +167,9 @@ function PaymentDemo() {
         />
 
         <TouchableOpacity
-          style={[styles.payBtn, loading && styles.payBtnDisabled]}
+          style={[styles.payBtn, (loading || sessionLoading) && styles.payBtnDisabled]}
           onPress={handlePay}
-          disabled={loading}>
+          disabled={loading || sessionLoading}>
           <Text style={styles.payBtnText}>
             {loading ? 'Processing...' : 'PAY'}
           </Text>
@@ -196,7 +206,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#1A1A2E',
     textAlign: 'center',
-    marginTop: 12,
+    marginTop: 32,
   },
   subtitle: {
     fontSize: 16,
