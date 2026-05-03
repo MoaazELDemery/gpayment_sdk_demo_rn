@@ -1,97 +1,105 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Geidea Payment SDK — React Native Demo
 
-# Getting Started
+A demo React Native app showing how to integrate the [Geidea Payment SDK](https://github.com/geidea/payment-sdk-react-native) for in-app card payments.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## Features
 
-## Step 1: Start Metro
+- Accept payments using a Geidea session ID
+- Language selection (English / Arabic)
+- Environment switching (Test / Pre-Production / Production)
+- Region support (Egypt / KSA / UAE)
+- Payment result display (order ID, token, card brand, masked card number)
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## Prerequisites
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+- Node.js >= 22.11.0
+- Yarn >= 3.6.4
+- React Native development environment set up ([official guide](https://reactnative.dev/docs/set-up-your-environment))
+- iOS: Xcode 15+, CocoaPods
+- Android: Android Studio with SDK 34+
 
-```sh
-# Using npm
-npm start
+## Setup
 
-# OR using Yarn
-yarn start
+```bash
+# Install dependencies
+yarn install
+
+# iOS only — install CocoaPods
+cd ios && bundle exec pod install && cd ..
 ```
 
-## Step 2: Build and run your app
+The Geidea SDK package (`geidea-payment-sdk-react-native-0.0.1.tgz`) is included in the repo root. It's referenced as a local dependency in `package.json`.
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+## Running
 
-### Android
+```bash
+# Start Metro bundler
+yarn start
 
-```sh
-# Using npm
-npm run android
+# Run on iOS
+yarn ios
 
-# OR using Yarn
+# Run on Android
 yarn android
 ```
 
-### iOS
+## How It Works
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+1. Enter a **session ID** obtained from your backend (created via the Geidea Order API).
+2. Select language, environment, and region.
+3. Tap **PAY** — the SDK presents the native payment sheet.
+4. On completion, an alert shows the order ID, token, and card details.
+5. On cancellation, the user is informed.
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+### Integration Point
 
-```sh
-bundle install
+The entire integration lives in `App.tsx`:
+
+```typescript
+import { payWithGeidea } from '@geidea/payment-sdk-react-native';
+
+const result = await payWithGeidea({
+  sessionId: 'your-session-id',
+  language: 'en',
+  environment: 'test',
+  region: 'egypt',
+});
 ```
 
-Then, and every time you update your native dependencies, run:
+## Project Structure
 
-```sh
-bundle exec pod install
+```
+App.tsx                          # Demo UI and SDK integration
+app.json                         # React Native app config
+package.json                     # Dependencies (SDK referenced as local .tgz)
+index.js                         # App entry point
+metro.config.js                  # Metro bundler config
+react-native.config.js           # RN CLI config
+tsconfig.json                    # TypeScript config
+ios/                             # Native iOS project
+android/                         # Native Android project
+geidea-payment-sdk-react-native-0.0.1.tgz  # Local SDK package
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+## SDK API
 
-```sh
-# Using npm
-npm run ios
+| Param          | Type   | Required | Default   | Values                    |
+|----------------|--------|----------|-----------|---------------------------|
+| `sessionId`    | string | Yes      | —         | Geidea order session ID   |
+| `language`     | string | No       | `'en'`    | `'en'`, `'ar'`, `'fr'`   |
+| `environment`  | string | No       | `'test'`  | `'test'`, `'preprod'`, `'prod'` |
+| `region`       | string | No       | `'egypt'` | `'egypt'`, `'ksa'`, `'uae'`     |
 
-# OR using Yarn
-yarn ios
+Returns a `GeideaResult`:
+
+```typescript
+{ status: 'completed', result: { orderId, tokenId, paymentMethod } }
+// or
+{ status: 'canceled' }
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+## Troubleshooting
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- **`startWithConfig` of null** — Run `cd ios && pod install` to link the native module, then rebuild.
+- **Metro cache issues** — Run `yarn start --reset-cache`.
+- **iOS build errors** — Ensure you're opening `.xcworkspace`, not `.xcodeproj`.
