@@ -86,7 +86,7 @@ geidea-payment-sdk-react-native-0.0.1.tgz  # Local SDK package
 | Param          | Type   | Required | Default   | Values                    |
 |----------------|--------|----------|-----------|---------------------------|
 | `sessionId`    | string | Yes      | —         | Geidea order session ID   |
-| `language`     | string | No       | `'en'`    | `'en'`, `'ar'`, `'fr'`   |
+| `language`     | string | No       | `'en'`    | `'en'`, `'ar'`   |
 | `environment`  | string | No       | `'test'`  | `'test'`, `'preprod'`, `'prod'` |
 | `region`       | string | No       | `'egypt'` | `'egypt'`, `'ksa'`, `'uae'`     |
 
