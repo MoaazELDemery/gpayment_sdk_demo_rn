@@ -75,18 +75,34 @@ function SegmentedControl<T extends string>({
 
 function PaymentDemo() {
   const insets = useSafeAreaInsets();
+  const [merchantKey, setMerchantKey] = useState('2258188d-9b2e-4bbf-817a-bd74a85e0c9c');
+  const [apiPassword, setApiPassword] = useState('e8374eaa-a151-47a6-b967-99dc482ecaaf');
   const [sessionId, setSessionId] = useState('');
   const [language, setLanguage] = useState<Language>('en');
   const [environment, setEnvironment] = useState<Environment>('prod');
   const [region, setRegion] = useState<Region>('egypt');
   const [loading, setLoading] = useState(false);
-  const [sessionLoading, setSessionLoading] = useState(true);
+  const [sessionLoading, setSessionLoading] = useState(false);
+
+  const handleCreateSession = async () => {
+    if (!merchantKey.trim() || !apiPassword.trim()) {
+      Alert.alert('Missing Credentials', 'Please enter Merchant Key and Password.');
+      return;
+    }
+    setSessionLoading(true);
+    setSessionId('');
+    try {
+      const id = await createSession(merchantKey.trim(), apiPassword.trim());
+      setSessionId(id);
+    } catch (err: any) {
+      Alert.alert('Session Error', err.message);
+    } finally {
+      setSessionLoading(false);
+    }
+  };
 
   useEffect(() => {
-    createSession()
-      .then(id => setSessionId(id))
-      .catch(err => Alert.alert('Session Error', err.message))
-      .finally(() => setSessionLoading(false));
+    handleCreateSession();
   }, []);
 
   const handlePay = async () => {
@@ -133,6 +149,28 @@ function PaymentDemo() {
       <Text style={styles.subtitle}>Demo Application</Text>
 
       <View style={styles.card}>
+        <Text style={styles.label}>Merchant Key</Text>
+        <TextInput
+          style={styles.input}
+          value={merchantKey}
+          onChangeText={setMerchantKey}
+          placeholder="Enter merchant public key"
+          placeholderTextColor="#999"
+          autoCapitalize="none"
+          autoCorrect={false}
+        />
+
+        <Text style={styles.label}>Password</Text>
+        <TextInput
+          style={styles.input}
+          value={apiPassword}
+          onChangeText={setApiPassword}
+          placeholder="Enter API password"
+          placeholderTextColor="#999"
+          autoCapitalize="none"
+          autoCorrect={false}
+        />
+
         <Text style={styles.label}>Session ID</Text>
         <TextInput
           style={styles.input}

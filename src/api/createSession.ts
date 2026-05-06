@@ -103,35 +103,35 @@ function toBase64(bytes: Uint8Array): string {
 // --- Geidea Session API ---
 
 const SESSION_API =
-  'https://api.merchant.geidea.net/payment-intent/api/v2/direct/Session';
-
-const MERCHANT_PUBLIC_KEY = '99e20b62-2b76-4455-8b27-ef7a92d2d1b3';
-const API_PASSWORD = 'c429331b-25fa-44b0-94a5-6d5a92e3ef75';
-
-const BASIC_AUTH =
-  'Basic OTllMjBiNjItMmI3Ni00NDU1LThiMjctZWY3YTkyZDJkMWIzOmM0MjkzMzFiLTI1ZmEtNDRiMC05NGE1LTZkNWE5MmUzZWY3NQ==';
+  'https://api.geidea.ae/payment-intent/api/v2/direct/Session';
 
 function computeSignature(
+  merchantKey: string,
+  apiPassword: string,
   amount: number,
   currency: string,
   timestamp: string,
 ): string {
   const amountStr = amount.toFixed(2);
-  const message = MERCHANT_PUBLIC_KEY + amountStr + currency + timestamp;
-  return toBase64(hmacSHA256(API_PASSWORD, message));
+  const message = merchantKey + amountStr + currency + timestamp;
+  return toBase64(hmacSHA256(apiPassword, message));
 }
 
-export async function createSession(): Promise<string> {
+function makeBasicAuth(merchantKey: string, apiPassword: string): string {
+  return 'Basic ' + toBase64(encode(merchantKey + ':' + apiPassword));
+}
+
+export async function createSession(merchantKey: string, apiPassword: string): Promise<string> {
   const timeStamp = new Date().toISOString();
   const amount = 740;
   const currency = 'EGP';
-  const signature = computeSignature(amount, currency, timeStamp);
+  const signature = computeSignature(merchantKey, apiPassword, amount, currency, timeStamp);
 
   const res = await fetch(SESSION_API, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
-      Authorization: BASIC_AUTH,
+      Authorization: makeBasicAuth(merchantKey, apiPassword),
       'Content-Type': 'application/json',
       OSVersion: '18.0',
       deviceBrand: 'Apple',
