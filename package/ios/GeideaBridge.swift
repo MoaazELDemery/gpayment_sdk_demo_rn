@@ -28,9 +28,8 @@ class GeideaBridge: NSObject {
     }
 
     let lang   = mapLanguage(params["language"] as? String)
-    let env    = mapEnvironment(params["environment"] as? String)
-    let environmentType = GeideaPaymentSDK.EnvironmentType.production
     let region = mapRegion(params["region"] as? String)
+    let environment = mapEnvironment(params["environment"] as? String)
     let merchantId = params["merchantId"] as? String
 	  var theme: SDKTheme?
 	  if let primaryColor = params["primaryColor"] as? String,
@@ -44,16 +43,15 @@ class GeideaBridge: NSObject {
 		  )
      }
 
-
     let cfg = GeideaPaymentSDK.GDPaymentSDKConfiguration(
       sessionId: sessionId,
       applePayConfig: ApplePayConfigurations(merchantId: merchantId ?? ""),
       language: lang,
       region: region,
-      environmentType: env,
+      environmentType: "Production",
       theme: theme
     )
-    
+
     Task { @MainActor in
      guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
      let rootViewController = windowScene.windows.first?.rootViewController else {

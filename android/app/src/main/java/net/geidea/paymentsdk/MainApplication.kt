@@ -1,4 +1,4 @@
-package com.gpayment_sdk_demo_rn
+package net.geidea.paymentsdk
 
 import android.app.Application
 import com.facebook.react.PackageList

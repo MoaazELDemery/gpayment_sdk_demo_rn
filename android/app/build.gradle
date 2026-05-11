@@ -78,13 +78,13 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.gpayment_sdk_demo_rn"
+    namespace "net.geidea.paymentsdk"
     defaultConfig {
-        applicationId "com.gpayment_sdk_demo_rn"
+        applicationId "net.geidea.paymentsdk"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "2.0.3"
     }
 
     buildFeatures {

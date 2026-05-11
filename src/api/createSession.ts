@@ -103,7 +103,7 @@ function toBase64(bytes: Uint8Array): string {
 // --- Geidea Session API ---
 
 const SESSION_API =
-  'https://api.geidea.ae/payment-intent/api/v2/direct/Session';
+  'https://api.merchant.geidea.net/payment-intent/api/v2/direct/Session';
 
 function computeSignature(
   merchantKey: string,

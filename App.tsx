@@ -75,8 +75,8 @@ function SegmentedControl<T extends string>({
 
 function PaymentDemo() {
   const insets = useSafeAreaInsets();
-  const [merchantKey, setMerchantKey] = useState('2258188d-9b2e-4bbf-817a-bd74a85e0c9c');
-  const [apiPassword, setApiPassword] = useState('e8374eaa-a151-47a6-b967-99dc482ecaaf');
+  // const [merchantKey, setMerchantKey] = useState('99e20b62-2b76-4455-8b27-ef7a92d2d1b3');
+  // const [apiPassword, setApiPassword] = useState('c429331b-25fa-44b0-94a5-6d5a92e3ef75');
   const [sessionId, setSessionId] = useState('');
   const [language, setLanguage] = useState<Language>('en');
   const [environment, setEnvironment] = useState<Environment>('prod');
@@ -85,15 +85,15 @@ function PaymentDemo() {
   const [sessionLoading, setSessionLoading] = useState(false);
 
   const handleCreateSession = async () => {
-    if (!merchantKey.trim() || !apiPassword.trim()) {
-      Alert.alert('Missing Credentials', 'Please enter Merchant Key and Password.');
-      return;
-    }
+    // if (!merchantKey.trim() || !apiPassword.trim()) {
+    //   Alert.alert('Missing Credentials', 'Please enter Merchant Key and Password.');
+    //   return;
+    // }
     setSessionLoading(true);
     setSessionId('');
     try {
-      const id = await createSession(merchantKey.trim(), apiPassword.trim());
-      setSessionId(id);
+      // const id = await createSession(merchantKey.trim(), apiPassword.trim());
+      // setSessionId(id);
     } catch (err: any) {
       Alert.alert('Session Error', err.message);
     } finally {
@@ -106,6 +106,7 @@ function PaymentDemo() {
   }, []);
 
   const handlePay = async () => {
+    console.log(sessionId, language, environment, region);
     if (!sessionId.trim()) {
       Alert.alert('Missing Session ID', 'Please enter a session ID.');
       return;
@@ -152,8 +153,8 @@ function PaymentDemo() {
         <Text style={styles.label}>Merchant Key</Text>
         <TextInput
           style={styles.input}
-          value={merchantKey}
-          onChangeText={setMerchantKey}
+          // value={merchantKey}
+          // onChangeText={setMerchantKey}
           placeholder="Enter merchant public key"
           placeholderTextColor="#999"
           autoCapitalize="none"
@@ -163,8 +164,8 @@ function PaymentDemo() {
         <Text style={styles.label}>Password</Text>
         <TextInput
           style={styles.input}
-          value={apiPassword}
-          onChangeText={setApiPassword}
+          // value={apiPassword}
+          // onChangeText={setApiPassword}
           placeholder="Enter API password"
           placeholderTextColor="#999"
           autoCapitalize="none"
