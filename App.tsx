@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Alert,
   StyleSheet,
@@ -20,7 +20,6 @@ import type {
   Region,
   GeideaResult,
 } from '@geidea/payment-sdk-react-native';
-import { createSession } from './src/api/createSession';
 
 type PickerOption<T extends string> = { label: string; value: T };
 
@@ -32,7 +31,6 @@ const LANGUAGES: PickerOption<Language>[] = [
 const ENVIRONMENTS: PickerOption<Environment>[] = [
   { label: 'Production', value: 'prod' },
   { label: 'Pre-Prod', value: 'preprod' },
-  { label: 'Test', value: 'test' },
 ];
 
 const REGIONS: PickerOption<Region>[] = [
@@ -75,35 +73,11 @@ function SegmentedControl<T extends string>({
 
 function PaymentDemo() {
   const insets = useSafeAreaInsets();
-  const [merchantKey, setMerchantKey] = useState('');
-  const [apiPassword, setApiPassword] = useState('');
   const [sessionId, setSessionId] = useState('');
   const [language, setLanguage] = useState<Language>('en');
   const [environment, setEnvironment] = useState<Environment>('prod');
   const [region, setRegion] = useState<Region>('egypt');
   const [loading, setLoading] = useState(false);
-  const [sessionLoading, setSessionLoading] = useState(false);
-
-  const handleCreateSession = async () => {
-    if (!merchantKey.trim() || !apiPassword.trim()) {
-      Alert.alert('Missing Credentials', 'Please enter Merchant Key and Password.');
-      return;
-    }
-    setSessionLoading(true);
-    setSessionId('');
-    try {
-      const id = await createSession(merchantKey.trim(), apiPassword.trim());
-      setSessionId(id);
-    } catch (err: any) {
-      Alert.alert('Session Error', err.message);
-    } finally {
-      setSessionLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    handleCreateSession();
-  }, []);
 
   const handlePay = async () => {
     if (!sessionId.trim()) {
@@ -149,38 +123,15 @@ function PaymentDemo() {
       <Text style={styles.subtitle}>Demo Application</Text>
 
       <View style={styles.card}>
-        <Text style={styles.label}>Merchant Key</Text>
-        <TextInput
-          style={styles.input}
-          value={merchantKey}
-          onChangeText={setMerchantKey}
-          placeholder="Enter merchant public key"
-          placeholderTextColor="#999"
-          autoCapitalize="none"
-          autoCorrect={false}
-        />
-
-        <Text style={styles.label}>Password</Text>
-        <TextInput
-          style={styles.input}
-          value={apiPassword}
-          onChangeText={setApiPassword}
-          placeholder="Enter API password"
-          placeholderTextColor="#999"
-          autoCapitalize="none"
-          autoCorrect={false}
-        />
-
         <Text style={styles.label}>Session ID</Text>
         <TextInput
           style={styles.input}
-          value={sessionLoading ? 'Generating session...' : sessionId}
+          value={sessionId}
           onChangeText={setSessionId}
           placeholder="Enter session ID"
           placeholderTextColor="#999"
           autoCapitalize="none"
           autoCorrect={false}
-          editable={!sessionLoading}
         />
 
         <Text style={styles.label}>Language</Text>
@@ -205,9 +156,9 @@ function PaymentDemo() {
         />
 
         <TouchableOpacity
-          style={[styles.payBtn, (loading || sessionLoading) && styles.payBtnDisabled]}
+          style={[styles.payBtn, loading && styles.payBtnDisabled]}
           onPress={handlePay}
-          disabled={loading || sessionLoading}>
+          disabled={loading}>
           <Text style={styles.payBtnText}>
             {loading ? 'Processing...' : 'PAY'}
           </Text>
