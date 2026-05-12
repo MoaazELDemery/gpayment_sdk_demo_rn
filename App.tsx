@@ -90,7 +90,7 @@ function PaymentDemo() {
       const result: GeideaResult = await payWithGeidea({
         sessionId: sessionId.trim(),
         language,
-        environment: 'prod',
+        environment,
         region,
       });
 
