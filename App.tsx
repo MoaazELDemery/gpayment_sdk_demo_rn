@@ -75,8 +75,8 @@ function SegmentedControl<T extends string>({
 
 function PaymentDemo() {
   const insets = useSafeAreaInsets();
-  const [merchantKey, setMerchantKey] = useState('2258188d-9b2e-4bbf-817a-bd74a85e0c9c');
-  const [apiPassword, setApiPassword] = useState('e8374eaa-a151-47a6-b967-99dc482ecaaf');
+  const [merchantKey, setMerchantKey] = useState('');
+  const [apiPassword, setApiPassword] = useState('');
   const [sessionId, setSessionId] = useState('');
   const [language, setLanguage] = useState<Language>('en');
   const [environment, setEnvironment] = useState<Environment>('prod');

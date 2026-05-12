@@ -80,4 +80,3 @@ ios/Podfile.lock
 ios/*.xcworkspace/
 
 # Local SDK packages
-*.tgz
