@@ -10,11 +10,10 @@
     "test": "jest"
   },
   "dependencies": {
-    "@geidea/payment-sdk-react-native": "/Users/amr.fawaz/Documents/gpayment_sdk_demo_rn/geidea-payment-sdk-react-native-0.0.2.tgz",
+    "@geidea/payment-sdk-react-native": "file:./geidea-payment-sdk-react-native-0.0.3.tgz",
     "@react-native/new-app-screen": "0.85.2",
     "react": "19.2.3",
-    "react-native": "0.85.2",
-    "react-native-safe-area-context": "^5.5.2"
+    "react-native": "0.85.2"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

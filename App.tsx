@@ -8,15 +8,11 @@ import {
   View,
   ScrollView,
   Platform,
+  SafeAreaView,
 } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
 import { payWithGeidea } from '@geidea/payment-sdk-react-native';
 import type {
   Language,
-  Environment,
   Region,
   GeideaResult,
 } from '@geidea/payment-sdk-react-native';
@@ -28,7 +24,7 @@ const LANGUAGES: PickerOption<Language>[] = [
   { label: 'Arabic', value: 'ar' },
 ];
 
-const ENVIRONMENTS: PickerOption<Environment>[] = [
+const ENVIRONMENTS: PickerOption<string>[] = [
   { label: 'Production', value: 'prod' },
   { label: 'Pre-Prod', value: 'preprod' },
 ];
@@ -72,10 +68,9 @@ function SegmentedControl<T extends string>({
 }
 
 function PaymentDemo() {
-  const insets = useSafeAreaInsets();
   const [sessionId, setSessionId] = useState('');
   const [language, setLanguage] = useState<Language>('en');
-  const [environment, setEnvironment] = useState<Environment>('prod');
+  const [environment, setEnvironment] = useState<string>('prod');
   const [region, setRegion] = useState<Region>('egypt');
   const [loading, setLoading] = useState(false);
 
@@ -90,8 +85,9 @@ function PaymentDemo() {
       const result: GeideaResult = await payWithGeidea({
         sessionId: sessionId.trim(),
         language,
-        environment,
         region,
+        primaryColor: '#FF0000',
+        secondaryColor: '#FFFFFF',
       });
 
       if (result.status === 'canceled') {
@@ -117,7 +113,7 @@ function PaymentDemo() {
   return (
     <ScrollView
       style={styles.scroll}
-      contentContainerStyle={[styles.content, { paddingBottom: insets.bottom + 24 }]}
+      contentContainerStyle={[styles.content, { paddingBottom: 24 }]}
       keyboardShouldPersistTaps="handled">
       <Text style={styles.title}>Geidea Payment SDK</Text>
       <Text style={styles.subtitle}>Demo Application</Text>
@@ -174,13 +170,13 @@ function PaymentDemo() {
 
 export default function App() {
   return (
-    <SafeAreaProvider>
+    <SafeAreaView style={styles.scroll}>
       <PaymentDemo />
-    </SafeAreaProvider>
+    </SafeAreaView>
   );
 }
 
-const PRIMARY = '#6C47FF';
+const PRIMARY = '#FF0000';
 
 const styles = StyleSheet.create({
   scroll: {
