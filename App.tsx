@@ -8,8 +8,9 @@ import {
   View,
   ScrollView,
   Platform,
-  SafeAreaView,
 } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { payWithGeidea } from '@geidea/payment-sdk-react-native';
 import type {
   Language,
@@ -67,7 +68,7 @@ function SegmentedControl<T extends string>({
   );
 }
 
-function PaymentDemo() {
+function HomeScreen() {
   const [sessionId, setSessionId] = useState('');
   const [language, setLanguage] = useState<Language>('en');
   const [environment, setEnvironment] = useState<string>('prod');
@@ -86,6 +87,7 @@ function PaymentDemo() {
         sessionId: sessionId.trim(),
         language,
         region,
+        merchantName: 'Demo Store',
         primaryColor: '#FF4D00',
         secondaryColor: '#FFFFFF',
       });
@@ -104,7 +106,6 @@ function PaymentDemo() {
     } catch (err: any) {
       Alert.alert('Payment Error', err?.message ?? 'An unknown error occurred.');
       console.log('Payment error details:', err?.response ?? err);
-      console.log('Payment error stack:', sessionId, language, environment, region);
     } finally {
       setLoading(false);
     }
@@ -168,11 +169,19 @@ function PaymentDemo() {
   );
 }
 
+const Stack = createNativeStackNavigator();
+
 export default function App() {
   return (
-    <SafeAreaView style={styles.scroll}>
-      <PaymentDemo />
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ title: 'Geidea SDK Demo' }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
