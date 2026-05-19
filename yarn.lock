@@ -1497,13 +1497,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@geidea/payment-sdk-react-native@file:./geidea-payment-sdk-react-native-0.0.3.tgz::locator=gpayment_sdk_demo_rn%40workspace%3A.":
-  version: 0.0.3
-  resolution: "@geidea/payment-sdk-react-native@file:./geidea-payment-sdk-react-native-0.0.3.tgz::locator=gpayment_sdk_demo_rn%40workspace%3A."
+"@geidea/payment-sdk-react-native@file:/Users/moaaz.eldemery/gpayment_sdk_demo_rn/geidea-payment-sdk-react-native-0.0.4.tgz::locator=gpayment_sdk_demo_rn%40workspace%3A.":
+  version: 0.0.4
+  resolution: "@geidea/payment-sdk-react-native@file:/Users/moaaz.eldemery/gpayment_sdk_demo_rn/geidea-payment-sdk-react-native-0.0.4.tgz::locator=gpayment_sdk_demo_rn%40workspace%3A."
   peerDependencies:
     react: ">=18"
     react-native: ">=0.71"
-  checksum: 4c009fb1e827062dcd5e787aa627bd913e1c132c8d7fda2eda86592e49c5492afcc617af48c8c5ad387e6f880ea004d73e1c8d4965225caa667164578d21ca85
+  checksum: 67cf86b0edb9e6a8aef477bc64f4c45d7c7eaec91fafc3fa8e8d103aabcede9546280f33a54acff967c739167f91a6f7f82193eae428824f9d3fc8b36fe04f8a
   languageName: node
   linkType: hard
 
@@ -2493,11 +2493,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 25.8.0
-  resolution: "@types/node@npm:25.8.0"
+  version: 25.9.0
+  resolution: "@types/node@npm:25.9.0"
   dependencies:
     undici-types: ">=7.24.0 <7.24.7"
-  checksum: 551b1e1e49d0a799235813d9f35201afdcddb5dc09c5b84832aae9f953ce419b24005d976058bac8a084cf525458e2406abe139659e4c4b2e1c8b5da153e196a
+  checksum: 17b89c23a1bbc6a3175c2d2defa5d75ff5db424a27ecae8ff2b9c11c8f444b7f219cdae6c7c254c9f022e47adce5840185244af5566b7f94a0879bf6027b86bb
   languageName: node
   linkType: hard
 
@@ -4811,7 +4811,7 @@ __metadata:
     "@babel/core": ^7.25.2
     "@babel/preset-env": ^7.25.3
     "@babel/runtime": ^7.25.0
-    "@geidea/payment-sdk-react-native": "file:./geidea-payment-sdk-react-native-0.0.3.tgz"
+    "@geidea/payment-sdk-react-native": /Users/moaaz.eldemery/gpayment_sdk_demo_rn/geidea-payment-sdk-react-native-0.0.4.tgz
     "@react-native-community/cli": 20.1.0
     "@react-native-community/cli-platform-android": 20.1.0
     "@react-native-community/cli-platform-ios": 20.1.0

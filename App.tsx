@@ -86,7 +86,7 @@ function PaymentDemo() {
         sessionId: sessionId.trim(),
         language,
         region,
-        primaryColor: '#FF0000',
+        primaryColor: '#FF4D00',
         secondaryColor: '#FFFFFF',
       });
 
@@ -176,7 +176,7 @@ export default function App() {
   );
 }
 
-const PRIMARY = '#FF0000';
+const PRIMARY = '#FF4D00';
 
 const styles = StyleSheet.create({
   scroll: {
