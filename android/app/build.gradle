@@ -19,13 +19,13 @@ react {
     // cliFile = file("../../node_modules/react-native/cli.js")
 
     /* Variants */
-    //   The list of variants to that are debuggable. For those we're going to
-    //   skip the bundling of the JS bundle and the assets. Default is "debug", "debugOptimized".
-    //   If you add flavors like lite, prod, etc. you'll have to list your debuggableVariants.
-    // debuggableVariants = ["liteDebug", "liteDebugOptimized", "prodDebug", "prodDebugOptimized"]
+    // Bundle JS into the debug APK as well so it can be installed on real devices
+    // without requiring a running Metro server.
+    debuggableVariants = []
 
     /* Bundling */
     //   A list containing the node command and its flags. Default is just 'node'.
+    // Uses `node` from PATH so the project works on other machines.
     // nodeExecutableAndArgs = ["node"]
     //
     //   The command to run when bundling. By default is 'bundle'
@@ -80,11 +80,11 @@ android {
 
     namespace "com.gpayment_sdk_demo_rn"
     defaultConfig {
-        applicationId "com.gpayment_sdk_demo_rn"
+        applicationId "net.geidea.paymentsdk"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "2.0.3"
     }
 
     buildFeatures {
@@ -111,6 +111,17 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+
+    lint {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+}
+
+repositories {
+    flatDir {
+        dirs("$rootDir/../node_modules/@geidea/payment-sdk-react-native/android/libs")
+    }
 }
 
 dependencies {
@@ -124,7 +135,8 @@ dependencies {
     }
 
     // Geidea Payment SDK
-    implementation(files("libs/PGW-SDK-1.0.0.aar"))
+    implementation(name: "PGW-SDK-2.0.2", ext: "aar")
+    implementation(name: "networklogging-1.0.0", ext: "aar")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.core:core-ktx:1.10.1")

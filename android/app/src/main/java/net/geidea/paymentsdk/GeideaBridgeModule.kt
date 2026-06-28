@@ -48,7 +48,8 @@ class GeideaBridgeModule(private val reactContext: ReactApplicationContext) :
         }
 
         val language = mapLanguage(params.getString("language"))
-        val isSandbox = mapEnvironment(params.getString("environment"))
+        val environment = params.getString("environment")
+        val isSandbox = mapEnvironment(environment)
         val region = mapRegion(params.getString("region"))
         val primaryColor = params.getString("primaryColor")
         val secondaryColor = params.getString("secondaryColor")
@@ -118,7 +119,10 @@ class GeideaBridgeModule(private val reactContext: ReactApplicationContext) :
             val sdk = GDPaymentSDK.sharedInstance()
             sdk.setPaymentCallback(resultListener)
 
-            Log.i("GeideaBridge", "Starting SDK with sessionId: $sessionId, sandbox: $isSandbox")
+            Log.i(
+                "GeideaBridge",
+                "Starting SDK with sessionId: $sessionId, environment: $environment, sandbox: $isSandbox, region: $region"
+            )
 
             val presentationStyle = SDKPresentationStyle.Push()
             sdk.start(config, activity, presentationStyle)

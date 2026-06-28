@@ -13,6 +13,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { payWithGeidea } from '@geidea/payment-sdk-react-native';
 import type {
+  Environment,
   Language,
   Region,
   GeideaResult,
@@ -25,9 +26,9 @@ const LANGUAGES: PickerOption<Language>[] = [
   { label: 'Arabic', value: 'ar' },
 ];
 
-const ENVIRONMENTS: PickerOption<string>[] = [
-  { label: 'Production', value: 'prod' },
-  { label: 'Pre-Prod', value: 'preprod' },
+const ENVIRONMENTS: PickerOption<Environment>[] = [
+  { label: 'Production', value: 'production' },
+  { label: 'Sandbox', value: 'sandbox' },
 ];
 
 const REGIONS: PickerOption<Region>[] = [
@@ -71,7 +72,7 @@ function SegmentedControl<T extends string>({
 function HomeScreen() {
   const [sessionId, setSessionId] = useState('');
   const [language, setLanguage] = useState<Language>('en');
-  const [environment, setEnvironment] = useState<string>('prod');
+  const [environment, setEnvironment] = useState<Environment>('production');
   const [region, setRegion] = useState<Region>('egypt');
   const [loading, setLoading] = useState(false);
 
@@ -85,6 +86,7 @@ function HomeScreen() {
     try {
       const result: GeideaResult = await payWithGeidea({
         sessionId: sessionId.trim(),
+        environment,
         language,
         region,
         merchantName: 'Demo Store',
@@ -106,6 +108,7 @@ function HomeScreen() {
     } catch (err: any) {
       Alert.alert('Payment Error', err?.message ?? 'An unknown error occurred.');
       console.log('Payment error details:', err?.response ?? err);
+      console.log('Payment error stack:', sessionId, environment, language, region);
     } finally {
       setLoading(false);
     }

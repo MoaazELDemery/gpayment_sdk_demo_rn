@@ -1,12 +1,12 @@
 # Geidea Payment SDK — React Native Demo
 
-A demo React Native app showing how to integrate the [Geidea Payment SDK](https://github.com/geidea/payment-sdk-react-native) for in-app card payments.
+A demo React Native app showing how to integrate the Geidea Payment SDK for in-app card payments.
 
 ## Features
 
 - Accept payments using a Geidea session ID
 - Language selection (English / Arabic)
-- Environment switching (Test / Pre-Production / Production)
+- Environment switching (Production / Sandbox)
 - Region support (Egypt / KSA / UAE)
 - Payment result display (order ID, token, card brand, masked card number)
 
@@ -16,7 +16,7 @@ A demo React Native app showing how to integrate the [Geidea Payment SDK](https:
 - Yarn >= 3.6.4
 - React Native development environment set up ([official guide](https://reactnative.dev/docs/set-up-your-environment))
 - iOS: Xcode 15+, CocoaPods
-- Android: Android Studio with SDK 34+
+- Android: Android Studio with SDK 36+
 
 ## Setup
 
@@ -28,7 +28,13 @@ yarn install
 cd ios && bundle exec pod install && cd ..
 ```
 
-The Geidea SDK package (`geidea-payment-sdk-react-native-0.0.1.tgz`) is included in the repo root. It's referenced as a local dependency in `package.json`.
+The Geidea SDK package (`geidea-payment-sdk-react-native-0.0.8.tgz`) is included in the repo root and referenced with a relative local dependency:
+
+```json
+"@geidea/payment-sdk-react-native": "file:./geidea-payment-sdk-react-native-0.0.8.tgz"
+```
+
+Because the tarball is tracked in git, cloning this repo on another machine and running `yarn install` will fetch the SDK from the repo itself.
 
 ## Running
 
@@ -46,7 +52,7 @@ yarn android
 ## How It Works
 
 1. Enter a **session ID** obtained from your backend (created via the Geidea Order API).
-2. Select language, environment, and region.
+2. Select language, environment, and region. Make sure the environment and region match the session ID created by your backend.
 3. Tap **PAY** — the SDK presents the native payment sheet.
 4. On completion, an alert shows the order ID, token, and card details.
 5. On cancellation, the user is informed.
@@ -61,7 +67,7 @@ import { payWithGeidea } from '@geidea/payment-sdk-react-native';
 const result = await payWithGeidea({
   sessionId: 'your-session-id',
   language: 'en',
-  environment: 'test',
+  environment: 'production',
   region: 'egypt',
 });
 ```
@@ -78,7 +84,7 @@ react-native.config.js           # RN CLI config
 tsconfig.json                    # TypeScript config
 ios/                             # Native iOS project
 android/                         # Native Android project
-geidea-payment-sdk-react-native-0.0.1.tgz  # Local SDK package
+geidea-payment-sdk-react-native-0.0.8.tgz  # Local SDK package
 ```
 
 ## SDK API
@@ -86,9 +92,13 @@ geidea-payment-sdk-react-native-0.0.1.tgz  # Local SDK package
 | Param          | Type   | Required | Default   | Values                    |
 |----------------|--------|----------|-----------|---------------------------|
 | `sessionId`    | string | Yes      | —         | Geidea order session ID   |
-| `language`     | string | No       | `'en'`    | `'en'`, `'ar'`   |
-| `environment`  | string | No       | `'test'`  | `'test'`, `'preprod'`, `'prod'` |
-| `region`       | string | No       | `'egypt'` | `'egypt'`, `'ksa'`, `'uae'`     |
+| `language`     | string | No       | `'en'`    | `'en'`, `'ar'` |
+| `environment`  | string | No       | `'production'` | `'production'`, `'sandbox'` |
+| `region`       | string | No       | `'egypt'` | `'egypt'`, `'ksa'`, `'uae'` |
+
+## Android SDK Version
+
+This demo uses `@geidea/payment-sdk-react-native` version `0.0.8`, which bundles Android `PGW-SDK-2.0.2`.
 
 Returns a `GeideaResult`:
 
@@ -102,4 +112,5 @@ Returns a `GeideaResult`:
 
 - **`startWithConfig` of null** — Run `cd ios && pod install` to link the native module, then rebuild.
 - **Metro cache issues** — Run `yarn start --reset-cache`.
+- **Android emulator DNS issues** — If the SDK opens and shows a generic “Something went wrong” dialog, verify emulator DNS with `adb shell ping -c 2 google.com`.
 - **iOS build errors** — Ensure you're opening `.xcworkspace`, not `.xcodeproj`.
