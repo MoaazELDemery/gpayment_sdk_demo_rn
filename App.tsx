@@ -91,7 +91,6 @@ function HomeScreen() {
         region,
         merchantName: 'Demo Store',
         primaryColor: '#FF4D00',
-        secondaryColor: '#FFFFFF',
       });
 
       if (result.status === 'canceled') {

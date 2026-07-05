@@ -1497,13 +1497,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@geidea/payment-sdk-react-native@file:./geidea-payment-sdk-react-native-0.0.8.tgz::locator=gpayment_sdk_demo_rn%40workspace%3A.":
-  version: 0.0.8
-  resolution: "@geidea/payment-sdk-react-native@file:./geidea-payment-sdk-react-native-0.0.8.tgz::locator=gpayment_sdk_demo_rn%40workspace%3A."
+"@geidea/payment-sdk-react-native@file:/Users/moaaz.eldemery/gpayment_sdk_demo_rn/geidea-payment-sdk-react-native-0.0.10.tgz::locator=gpayment_sdk_demo_rn%40workspace%3A.":
+  version: 0.0.10
+  resolution: "@geidea/payment-sdk-react-native@file:/Users/moaaz.eldemery/gpayment_sdk_demo_rn/geidea-payment-sdk-react-native-0.0.10.tgz::locator=gpayment_sdk_demo_rn%40workspace%3A."
   peerDependencies:
     react: ">=18"
     react-native: ">=0.71"
-  checksum: 3fd407693b7cfc90dfb12f22126d10d1e2ccd3cdd44c50a8169f3e4dcedf8d4fe58c5c7ccd5d06587166369fe08d0e86a520b8bd06e945ac34f50f6eeb05f4a7
+  checksum: a15cdcf6cf2cb3cc7639dde7a57c5b2b291796e03a982c07f0687c5d3af492246df6ecebf0f322c37120517a26bc76482a3b3d4cce36beb5c87812d59b6a5246
   languageName: node
   linkType: hard
 
@@ -4944,7 +4944,7 @@ __metadata:
     "@babel/core": ^7.25.2
     "@babel/preset-env": ^7.25.3
     "@babel/runtime": ^7.25.0
-    "@geidea/payment-sdk-react-native": "file:./geidea-payment-sdk-react-native-0.0.8.tgz"
+    "@geidea/payment-sdk-react-native": /Users/moaaz.eldemery/gpayment_sdk_demo_rn/geidea-payment-sdk-react-native-0.0.10.tgz
     "@react-native-community/cli": 20.1.0
     "@react-native-community/cli-platform-android": 20.1.0
     "@react-native-community/cli-platform-ios": 20.1.0

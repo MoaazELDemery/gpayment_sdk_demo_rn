@@ -28,10 +28,10 @@ yarn install
 cd ios && bundle exec pod install && cd ..
 ```
 
-The Geidea SDK package (`geidea-payment-sdk-react-native-0.0.8.tgz`) is included in the repo root and referenced with a relative local dependency:
+The Geidea SDK package (`geidea-payment-sdk-react-native-0.0.9.tgz`) is included in the repo root and referenced with a relative local dependency:
 
 ```json
-"@geidea/payment-sdk-react-native": "file:./geidea-payment-sdk-react-native-0.0.8.tgz"
+"@geidea/payment-sdk-react-native": "file:./geidea-payment-sdk-react-native-0.0.9.tgz"
 ```
 
 Because the tarball is tracked in git, cloning this repo on another machine and running `yarn install` will fetch the SDK from the repo itself.
@@ -84,7 +84,7 @@ react-native.config.js           # RN CLI config
 tsconfig.json                    # TypeScript config
 ios/                             # Native iOS project
 android/                         # Native Android project
-geidea-payment-sdk-react-native-0.0.8.tgz  # Local SDK package
+geidea-payment-sdk-react-native-0.0.9.tgz  # Local SDK package
 ```
 
 ## SDK API
@@ -98,7 +98,7 @@ geidea-payment-sdk-react-native-0.0.8.tgz  # Local SDK package
 
 ## Android SDK Version
 
-This demo uses `@geidea/payment-sdk-react-native` version `0.0.8`, which bundles Android `PGW-SDK-2.0.2`.
+This demo uses `@geidea/payment-sdk-react-native` version `0.0.9`, which bundles Android `PGW-SDK-2.0.4`.
 
 Returns a `GeideaResult`:
 

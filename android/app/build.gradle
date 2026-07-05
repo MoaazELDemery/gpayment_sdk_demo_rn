@@ -135,7 +135,7 @@ dependencies {
     }
 
     // Geidea Payment SDK
-    implementation(name: "PGW-SDK-2.0.2", ext: "aar")
+    implementation(name: "PGW-SDK-2.0.4", ext: "aar")
     implementation(name: "networklogging-1.0.0", ext: "aar")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.12.0")
